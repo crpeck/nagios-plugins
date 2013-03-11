@@ -1,0 +1,25 @@
+#!/bin/bash
+SERVICEDESC="twitter feed"
+CONTACTTWITTERID=wmunix
+HOSTNAME=testhostname
+HOSTSTATE=up
+SERVICESTATE="WARNING"
+SERVICEOUTPUT="WARNING - This system is whacked out of it's every loving mind, it simply has no idea what is doing - its y2k all over again"
+TIME=`date +%R`
+
+./notify_by_twitter.py -a notify_by_twitter.ini -m "$TIME $NOTIFICATIONTYPE $HOSTNAME $SERVICEDESC $SERVICESTATE $SERVICEOUTPUT"
+#
+
+exit
+
+dt=`date '+%H:%M %m/%d/%Y'`
+if [ -n "$NAGIOS_SERVICEDESC" ]; then
+  msg=`echo $NAGIOS_SERVICEDESC on $NAGIOS_HOSTNAME is $NAGIOS_SERVICESTATE at $dt $NAGIOS_SERVICEOUTPUT | cut -c 0-140`
+  /usr/local/nagios/libexec/notifications/connect_twitter "$msg"
+  unset msg
+else
+  msg=`echo $NAGIOS_HOSTNAME is $NAGIOS_HOSTSTATE at $dt $NAGIOS_HOSTOUTPUT| cut -c 0-140`
+  /usr/local/nagios/libexec/notifications/connect_twitter "$msg"
+  unset msg
+fi
+exit 0

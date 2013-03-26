@@ -14,7 +14,7 @@ UNKNOWN = 3
 buf = cStringIO.StringIO()
  
 c=pycurl.Curl()
-c.setopt(c.URL, 'http://jabber.it.wm.edu:9090/plugins/onlineusers')
+c.setopt(c.URL, 'http://JABBERHOST:9090/plugins/onlineusers')
 c.setopt(c.WRITEFUNCTION, buf.write)
 c.setopt(c.CONNECTTIMEOUT, 5)
 c.setopt(c.TIMEOUT, 8)
